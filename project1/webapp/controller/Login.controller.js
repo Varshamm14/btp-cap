@@ -32,6 +32,7 @@ sap.ui.define([
         },
 
         onLoginPress: async function() {
+            console.log("Login button pressed");
             var username = this.getView().byId("userInput").getValue();
             var password = this.getView().byId("passwordInput").getValue();
             
@@ -60,7 +61,7 @@ sap.ui.define([
                 console.log("Login response:", data);
                 sap.ui.core.BusyIndicator.hide();
         
-                if (datad.success) {
+                if (data.success) {
                     var userModel = new JSONModel({
                         username: data.user.username,
                         status: data.user.status
