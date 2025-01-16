@@ -1,0 +1,20 @@
+<mvc:View
+    controllerName="project1.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <!-- Added unique ID for the Page -->
+    <Page id="homePage" title="Home" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <!-- Added unique ID for the VBox -->
+            <VBox id="homeVBox" alignItems="Center" justifyContent="Center" height="100%">
+                <!-- Added unique ID for the Button -->
+                <Button
+                    id="productPageButton"
+                    text="Product Page"
+                    press="onProductPress"
+                    class="sapUiSmallMarginBottom"
+                    width="200px"/>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
