@@ -10,8 +10,6 @@ modules:
     JBP_CONFIG_COMPONENTS: 'jres: [''com.sap.xs.java.buildpack.jre.SAPMachineJRE'']'
     JBP_CONFIG_SAP_MACHINE_JRE: '{ version: 21.+ }'
     SPRING_PROFILES_ACTIVE: cloud,sandbox
-  requires:
-  - name: BTP-db
   provides:
   - name: srv-api
     properties:
@@ -25,17 +23,6 @@ modules:
     builder: custom
     commands:
     - mvn clean package -DskipTests=true --batch-mode
-- name: BTP-db-deployer
-  type: hdb
-  path: db
-  requires:
-  - name: BTP-db
-  parameters:
-    buildpack: nodejs_buildpack
-  build-parameters:
-    builder: custom
-    commands:
-    - npm run build
 - name: BTP-app-content
   type: com.sap.application.content
   path: .
@@ -60,6 +47,11 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: db
+  type: hdb
+  path: db
+  requires:
+  - name: hdi_db
 resources:
 - name: BTP-db
   type: com.sap.xs.hdi-container
@@ -90,6 +82,10 @@ resources:
     service: destination
     service-name: BTP-destination-service
     service-plan: lite
+- name: hdi_db
+  type: com.sap.xs.hdi-container
+  properties:
+    hdi-container-name: ${service-name}
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

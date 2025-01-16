@@ -74,36 +74,25 @@
             },
             "routes": [
                 {
-                    "name": "RouteView1",
-                    "pattern": ":?query:",
-                    "target": [
-                        "TargetView1"
-                    ]
-                },
-                {
                     "name": "login",
-                    "pattern": "login",
-                    "target": [
-                        "Login"
-                    ]
+                    "pattern": "",
+                    "target": "login"
                 },
                 {
                     "name": "home",
                     "pattern": "home",
-                    "target": [
-                        "home"
-                    ]
+                    "target": "home"
                 }
             ],
             "targets": {
-                "Login": {
-                    "id": "login",
-                    "name": "Login"
+                "login": {
+                    "viewName": "Login",
+                    "viewLevel": 0
                 },
                 "home": {
                     "viewName": "Home",
                     "viewLevel": 1
-                  }
+                }
             }
         },
         "rootView": {
