@@ -50,8 +50,8 @@ sap.ui.define([
                 var response = await fetch('http://localhost:8082/api/validateLogin', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Content-Type': 'application/json',   // Indicates that the request body is in JSON format.
+                        'Accept': 'application/json'          //Indicates that the response should also be in JSON format.
                     },
                     mode: 'cors',
                     body: JSON.stringify({
@@ -71,8 +71,9 @@ sap.ui.define([
         
                 if (data.success) {
                     var userModel = new JSONModel({
-                        username: data.user.username,
-                        status: data.user.status
+                        username: data.user.username,  // user object returned by the server in the response.
+                        status: data.user.status    // accesses the username property of the user object from the response.
+
                     });
                     this.getOwnerComponent().setModel(userModel, "userModel");
         
