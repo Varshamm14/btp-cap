@@ -15,14 +15,14 @@ public class LoginDAO {
 	@Autowired
     private EntityManager entityManager;
 
-    public int validateClientLogin(String clientname, String password) {
+    public int validateUserLogin(String username, String password) {
       
         StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("LOGIN_VALIDATION");
         storedProcedure.registerStoredProcedureParameter("p_username", String.class, ParameterMode.IN);
         storedProcedure.registerStoredProcedureParameter("p_password", String.class, ParameterMode.IN);  
         storedProcedure.registerStoredProcedureParameter("p_status", Integer.class, ParameterMode.OUT);
         storedProcedure.registerStoredProcedureParameter("p_message", String.class, ParameterMode.OUT);     
-        storedProcedure.setParameter("p_clientname", clientname);
+        storedProcedure.setParameter("p_username", username);
         storedProcedure.setParameter("p_password", password);
 
         try{
@@ -33,12 +33,12 @@ public class LoginDAO {
         if (status != null) {
             if (status == 1) {  // Authentication successful
                 return 1;  
-            } else if (status == 0 && message.equals("The client is inactive")) {  // Client is inactive
+            } else if (status == 0 && message.equals("The user is inactive")) {  // user is inactive
                 return 0; 
             }
         }
     }catch (NoResultException e){
-        System.out.println("No data found for the given clientname and password.");
+        System.out.println("No data found for the given username and password.");
     }catch (Exception e) {
         // Handle other exceptions, possibly log the exception for further analysis
         e.printStackTrace();

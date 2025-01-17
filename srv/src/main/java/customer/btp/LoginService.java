@@ -11,12 +11,12 @@ public class LoginService {
     private LoginDAO loginDao;
 
     public LoginResponse validateLogin(String username, String password) {
-        int clientStatus = loginDao.validateClientLogin(username, password);
+        int userStatus = loginDao.validateUserLogin(username, password);
 
-        if (clientStatus == -1) {
+        if (userStatus == -1) {
             return new LoginResponse("Invalid credentials", false);
-        } else if (clientStatus == 0) {
-            return new LoginResponse("The client is inactive", false);
+        } else if (userStatus == 0) {
+            return new LoginResponse("The user is inactive", false);
         } else {
             return new LoginResponse("Authentication successful", true);
         }
