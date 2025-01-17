@@ -6,12 +6,14 @@ PROCEDURE LOGIN_VALIDATION (
 LANGUAGE SQLSCRIPT
 AS
 BEGIN
-    DECLARE record_count INT;
+    DECLARE record_count INT;    
+    --An integer variable to store the count of matching records.
 
     -- Check if the record with the given id exists
     SELECT COUNT(*) INTO record_count
     FROM "login"
-    WHERE "id" = :in_id;
+    WHERE "id" = :in_id; --indicates a placeholder for the input parameter.
+
 
     IF record_count > 0 THEN
         -- If the record exists, update it
