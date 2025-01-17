@@ -1,33 +1,28 @@
-
-procedure "LOGIN_VALIDATION" 
-(
-    IN IN_USER NVARCHAR(256),        -- Input for username
-    IN IN_PASSWORD NVARCHAR(256),    -- Input for password
-    OUT EX_MESSAGE NVARCHAR(200)     -- Output for success/failure message
+PROCEDURE LOGIN_VALIDATION (
+    IN in_id BIGINT,
+    IN in_user NVARCHAR(256),
+    IN in_password NVARCHAR(256)
 )
 LANGUAGE SQLSCRIPT
 AS
 BEGIN
-    DECLARE user_id BIGINT;
-    
-    -- Check if the user already exists
-    SELECT "id" INTO user_id
+    DECLARE record_count INT;
+
+    -- Check if the record with the given id exists
+    SELECT COUNT(*) INTO record_count
     FROM "login"
-    WHERE "user" = :IN_USER;
+    WHERE "id" = :in_id;
 
-    -- If the user exists, update the password
-    IF :user_id IS NOT NULL THEN
+    IF record_count > 0 THEN
+        -- If the record exists, update it
         UPDATE "login"
-        SET "password" = :IN_PASSWORD
-        WHERE "id" = :user_id;
-
-        EX_MESSAGE := 'User password updated successfully.';
-
-    -- If the user does not exist, insert a new user
+        SET "user" = :in_user,
+            "password" = :in_password
+        WHERE "id" = :in_id;
     ELSE
+        -- If the record does not exist, insert a new one
         INSERT INTO "login" ("user", "password")
-        VALUES (:IN_USER, :IN_PASSWORD);
-
-        EX_MESSAGE := 'New user added successfully.';
+        VALUES (:in_user, :in_password);
     END IF;
 END;
+

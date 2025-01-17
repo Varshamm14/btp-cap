@@ -7,14 +7,13 @@ sap.ui.define([
  
     return Controller.extend("project1.controller.Login", {
         onInit: function() {
-            var oModel = new JSONModel({
+            var data = new JSONModel({
                 username: "",
                 password: ""
             });
-            this.getView().setModel(oModel, "loginModel");
-           
-           
-            console.log("Login Controller initialized");
+            this.getView().setModel(data, "loginModel");
+            //  console.log("Login Controller initialized");
+    
         },
  
         onShowPassword: function(oEvent) {
@@ -30,16 +29,25 @@ sap.ui.define([
                 oSource.setIcon("sap-icon://show"); 
             }
         },
+        // setInitialModel: function () {
+        //     // var obj = {
+        //     //  userName:"",
+        //     //  password:"",
+        //     // };
+        //     // this.getView().setModel(new JSONModel(obj), "loginMdl");
+          
+        //         let oModel = new JSONModel({userName: "Varsh", password: 123456});
+        //         this.getView().setModel(oModel, "loginModel");
 
+        // },
         onLoginPress: async function() {
             console.log("Login button pressed");
-            var username = this.getView().byId("userInput").getValue();
-            var password = this.getView().byId("passwordInput").getValue();
-            
+             var username = this.getView().byId("usernameInput").getValue();
+             var password = this.getView().byId("passwordInput").getValue();
             sap.ui.core.BusyIndicator.show(0);
         
             try {
-                var response = await fetch('http://localhost:8080/api/validateLogin', {
+                var response = await fetch('http://localhost:8082/api/validateLogin', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -88,6 +96,26 @@ sap.ui.define([
                 });
             }
         },
-        
+        // onPressSaveUser: async function () {
+           
+        //             let path = "http://localhost:8082/api/validateLogin";
+        //             var username = this.getView().byId("usernameInput").getValue();
+        //             var password = this.getView().byId("passwordInput").getValue();
+        //             let obj={
+        //                 username:username,
+        //                 password:password
+        //             }
+        //             let response = await this.restMethodPost(path, obj);
+        //             this.getView().setModel(new JSONModel(response), "companyMdl");
+        //             that.showLoading(false);
+        //             var msg = "Created successfully!";
+        //             MessageBox.information(msg, {
+        //                 actions: [MessageBox.Action.OK],
+        //                 onClose: function (sAction) {
+        //                     that.showLoading(false);
+        //                     that.getRouter().navTo("userDetail", { id: response.id });
+        //                 },
+        //             });
+        //         }
     });
 });
