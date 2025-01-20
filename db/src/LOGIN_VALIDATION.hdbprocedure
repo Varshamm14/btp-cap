@@ -1,30 +1,41 @@
-PROCEDURE LOGIN_VALIDATION (
-    IN in_id BIGINT,
-    IN in_user NVARCHAR(256),
-    IN in_password NVARCHAR(256)
+CREATE
+PROCEDURE "LOGIN_VALIDATION" (
+    IN p_username NVARCHAR(100),
+    IN p_password NVARCHAR(100),
+    OUT p_status INT,
+    OUT p_message NVARCHAR(255)
 )
 LANGUAGE SQLSCRIPT
 AS
-BEGIN
-    DECLARE record_count INT;    
-    --An integer variable to store the count of matching records.
-
-    -- Check if the record with the given id exists
-    SELECT COUNT(*) INTO record_count
+BEGIN  
+    DECLARE v_status INT DEFAULT 0; -- Default to 0 (failure)
+    DECLARE v_message NVARCHAR(255) DEFAULT 'Unknown error'; -- Default message
+ 
+    -- Try to get the client's status
+    SELECT "STATUS" INTO v_status
     FROM "login"
-    WHERE "id" = :in_id; --indicates a placeholder for the input parameter.
-
-
-    IF record_count > 0 THEN
-        -- If the record exists, update it
-        UPDATE "login"
-        SET "user" = :in_user,
-            "password" = :in_password
-        WHERE "id" = :in_id;
+    WHERE username = p_username
+    AND password = p_password;
+ 
+    -- Check if status is found and valid
+    IF :v_status IS NOT NULL THEN
+        -- Check if the client is active (status = 1)
+        IF :v_status = 1 THEN
+            -- Success case: Client authenticated and active
+            v_message := 'Authentication successful';
+            p_status := 1;  -- Success
+        ELSE
+            -- Inactive user
+            v_message := 'The user is inactive';
+            p_status := 0;  -- Failure (inactive user)
+        END IF;
     ELSE
-        -- If the record does not exist, insert a new one
-        INSERT INTO "login" ("user", "password")
-        VALUES (:in_user, :in_password);
+        -- Invalid credentials
+        v_message := 'Invalid credentials';
+        p_status := 0;  -- Failure (invalid credentials)
     END IF;
+ 
+    -- Assign the message to the OUT parameter
+    p_message := v_message;
+ 
 END;
-
