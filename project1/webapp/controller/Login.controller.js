@@ -12,14 +12,11 @@ sap.ui.define([
                 password: ""
             });
             this.getView().setModel(data, "loginModel");
-            //  console.log("Login Controller initialized");
-    
         },
  
         onShowPassword: function(oEvent) {
             var oSource = oEvent.getSource(); 
             var oPasswordField = this.getView().byId("passwordInput");
-           
            
             if (oPasswordField.getType() === "Password") {
                 oPasswordField.setType("Text"); 
@@ -29,29 +26,19 @@ sap.ui.define([
                 oSource.setIcon("sap-icon://show"); 
             }
         },
-        // setInitialModel: function () {
-        //     // var obj = {
-        //     //  userName:"",
-        //     //  password:"",
-        //     // };
-        //     // this.getView().setModel(new JSONModel(obj), "loginMdl");
-          
-        //         let oModel = new JSONModel({userName: "Varsh", password: 123456});
-        //         this.getView().setModel(oModel, "loginModel");
-
-        // },
+        
         onLoginPress: async function() {
             console.log("Login button pressed");
-             var username = this.getView().byId("usernameInput").getValue();
-             var password = this.getView().byId("passwordInput").getValue();
+            var username = this.getView().byId("usernameInput").getValue();
+            var password = this.getView().byId("passwordInput").getValue();
             sap.ui.core.BusyIndicator.show(0);
-        
+
             try {
                 var response = await fetch('http://localhost:8082/api/validateLogin', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',   // Indicates that the request body is in JSON format.
-                        'Accept': 'application/json'          //Indicates that the response should also be in JSON format.
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     },
                     mode: 'cors',
                     body: JSON.stringify({
@@ -72,51 +59,28 @@ sap.ui.define([
                 if (data.success) {
                     var userModel = new JSONModel({
                         username: data.user.username,  // user object returned by the server in the response.
-                        status: data.user.status    // accesses the username property of the user object from the response.
-
+                        status: data.user.status      // accesses the username property of the user object from the response.
                     });
                     this.getOwnerComponent().setModel(userModel, "userModel");
         
                     MessageBox.success("Login successful!! - User is active", {
                         onClose: function() {
                             var router = this.getOwnerComponent().getRouter();
-                            router.navTo("home");
+                            router.navTo("home");  // Ensure "home" is a defined route.
                         }.bind(this)
                     });
                 } else {
-                    MessageBox.error(data.message, {
+                    MessageBox.error(data.message || "Login failed", {
                         title: "Login Failed"
                     });
                 }
             } catch (error) {
                 console.error("Login error:", error);
                 sap.ui.core.BusyIndicator.hide();
-        
                 MessageBox.error("An error occurred during login. Please try again.", {
                     title: "Login Failed"
                 });
             }
-        },
-        // onPressSaveUser: async function () {
-           
-        //             let path = "http://localhost:8082/api/validateLogin";
-        //             var username = this.getView().byId("usernameInput").getValue();
-        //             var password = this.getView().byId("passwordInput").getValue();
-        //             let obj={
-        //                 username:username,
-        //                 password:password
-        //             }
-        //             let response = await this.restMethodPost(path, obj);
-        //             this.getView().setModel(new JSONModel(response), "companyMdl");
-        //             that.showLoading(false);
-        //             var msg = "Created successfully!";
-        //             MessageBox.information(msg, {
-        //                 actions: [MessageBox.Action.OK],
-        //                 onClose: function (sAction) {
-        //                     that.showLoading(false);
-        //                     that.getRouter().navTo("userDetail", { id: response.id });
-        //                 },
-        //             });
-        //         }
+        }
     });
 });

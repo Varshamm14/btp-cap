@@ -1,37 +1,27 @@
 PROCEDURE "LOGIN_VALIDATION"(
-    IN userName NVARCHAR(256), 
+    IN userName NVARCHAR(256),
     IN user_password NVARCHAR(256),
-    IN status TINYINT,  -- Adding status as an input parameter
     OUT EX_MESSAGE NVARCHAR(200)
 )
-AS 
-BEGIN 
+AS
+BEGIN
     -- Declare local variables
-    DECLARE recordCount INTEGER := 0;
-    DECLARE invalid CONDITION FOR SQL_ERROR_CODE 10001;
+    DECLARE v_status TINYINT;  -- To hold the user's status
+    DECLARE v_message NVARCHAR(200) DEFAULT 'Invalid credentials or inactive user.';  -- Default error message
 
-    -- Exception handler declarations
-    DECLARE EXIT HANDLER FOR invalid
-    BEGIN
-        EX_MESSAGE := 'Invalid credentials or inactive user.' || ::SQL_ERROR_MESSAGE;
-    END;
+    -- Check if the user exists with the provided username, password, and status (active)
+    SELECT "status" INTO v_status
+    FROM "users"
+    WHERE "username" = :userName
+    AND "password" = :user_password
+    AND "status" = 1;  -- Only active users (status = 1)
 
-    -- Check if the user exists with the provided username and password, and if the status is active (1)
-    SELECT COUNT(*) INTO recordCount 
-    FROM "users" 
-    WHERE "username" = :userName 
-    AND "password" = :user_password 
-    AND "status" = 1;  -- Only active users are allowed (status = 1)
-
-    -- If the user is valid and active, insert the new data
-    IF recordCount > 0 THEN
-        -- Insert the user login details into the table
-        INSERT INTO "users" ("username", "password", "status") 
-        VALUES (:userName, :user_password, :status); -- Inserting provided values
-
-        EX_MESSAGE := 'Authentication successful and data inserted';
+    -- If status is found and valid, set the success message
+    IF v_status IS NOT NULL THEN
+        EX_MESSAGE := 'Authentication successful';
     ELSE
-        SIGNAL invalid;  -- If user doesn't exist or status is not 1, signal invalid credentials
+        -- If not found or status is not active, return failure message
+        EX_MESSAGE := 'Invalid credentials or inactive user.';
     END IF;
 
 END;
