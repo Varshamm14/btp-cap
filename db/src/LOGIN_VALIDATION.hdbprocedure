@@ -1,41 +1,37 @@
-CREATE
-PROCEDURE "LOGIN_VALIDATION" (
-    IN p_username NVARCHAR(100),
-    IN p_password NVARCHAR(100),
-    OUT p_status INT,
-    OUT p_message NVARCHAR(255)
+PROCEDURE "LOGIN_VALIDATION"(
+    IN userName NVARCHAR(256), 
+    IN user_password NVARCHAR(256),
+    IN status TINYINT,  -- Adding status as an input parameter
+    OUT EX_MESSAGE NVARCHAR(200)
 )
-LANGUAGE SQLSCRIPT
-AS
-BEGIN  
-    DECLARE v_status INT DEFAULT 0; -- Default to 0 (failure)
-    DECLARE v_message NVARCHAR(255) DEFAULT 'Unknown error'; -- Default message
- 
-    -- Try to get the client's status
-    SELECT "STATUS" INTO v_status
-    FROM "login"
-    WHERE username = p_username
-    AND password = p_password;
- 
-    -- Check if status is found and valid
-    IF :v_status IS NOT NULL THEN
-        -- Check if the client is active (status = 1)
-        IF :v_status = 1 THEN
-            -- Success case: Client authenticated and active
-            v_message := 'Authentication successful';
-            p_status := 1;  -- Success
-        ELSE
-            -- Inactive user
-            v_message := 'The user is inactive';
-            p_status := 0;  -- Failure (inactive user)
-        END IF;
+AS 
+BEGIN 
+    -- Declare local variables
+    DECLARE recordCount INTEGER := 0;
+    DECLARE invalid CONDITION FOR SQL_ERROR_CODE 10001;
+
+    -- Exception handler declarations
+    DECLARE EXIT HANDLER FOR invalid
+    BEGIN
+        EX_MESSAGE := 'Invalid credentials or inactive user.' || ::SQL_ERROR_MESSAGE;
+    END;
+
+    -- Check if the user exists with the provided username and password, and if the status is active (1)
+    SELECT COUNT(*) INTO recordCount 
+    FROM "users" 
+    WHERE "username" = :userName 
+    AND "password" = :user_password 
+    AND "status" = 1;  -- Only active users are allowed (status = 1)
+
+    -- If the user is valid and active, insert the new data
+    IF recordCount > 0 THEN
+        -- Insert the user login details into the table
+        INSERT INTO "users" ("username", "password", "status") 
+        VALUES (:userName, :user_password, :status); -- Inserting provided values
+
+        EX_MESSAGE := 'Authentication successful and data inserted';
     ELSE
-        -- Invalid credentials
-        v_message := 'Invalid credentials';
-        p_status := 0;  -- Failure (invalid credentials)
+        SIGNAL invalid;  -- If user doesn't exist or status is not 1, signal invalid credentials
     END IF;
- 
-    -- Assign the message to the OUT parameter
-    p_message := v_message;
- 
+
 END;
