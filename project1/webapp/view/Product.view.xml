@@ -1,0 +1,69 @@
+<mvc:View
+    controllerName="project1.controller.Product"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page id="productPage" title="Product Page" showNavButton="true" navButtonPress="onNavBack">
+        <content>
+            <!-- Responsive Table -->
+            <Table id="productTable" 
+                   items="{/products}"
+                   growing="true"
+                   growingScrollToLoad="true"
+                   inset="false"
+                   class="sapUiResponsiveContentPadding">
+                
+                <headerToolbar>
+                    <!-- Adding ID to the Toolbar -->
+                    <Toolbar id="productToolbar">
+                        <Title  id="productTitle "text="Product List"/>
+                    </Toolbar>
+                </headerToolbar>
+
+                <columns>
+                    <!-- Product Name Column -->
+                    <Column  id="productColumn" hAlign="Begin" minScreenWidth="Tablet" demandPopin="true">
+                        <Text  id="productText" text="Product Name"/>
+                    </Column>
+
+                    <!-- Product ID Column -->
+                    <Column id="productColumn1" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+                        <Text id="productText1" text="Product ID"/>
+                    </Column>
+
+                    <Column id="productColumn2" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+                        <Text id="productText2" text="Quantity"/>
+                    </Column>
+
+                    <!-- Status Column -->
+                    <Column id="productColumn3" hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+                        <Text id="productText3" text="Status"/>
+                    </Column>
+
+                    <!-- Price Column -->
+                    <Column id="productColumn4" hAlign="End" minScreenWidth="Small" demandPopin="true">
+                        <Text id="productText4" text="Price"/>
+                    </Column>
+
+                    <!-- Supplier Column -->
+                    <Column id="productColumn5" hAlign="Begin" minScreenWidth="Small" demandPopin="true">
+                        <Text id="productText5" text="Supplier"/>
+                    </Column>
+                </columns>
+
+                <items>
+                    <!-- Adding ID to the ColumnListItem -->
+                    <ColumnListItem id="productListItem">
+                        <cells>
+                            <Text id="nameText" text="{name}" wrapping="true"/>
+                            <Text id="idText" text="{id}" wrapping="true"/>
+                            <Text id="quantityText" text="{quantity}" wrapping="true"/>
+                            <Text id="statusText" text="{status}" wrapping="true"/>
+                            <Text id="priceText" text="{price}" wrapping="true"/>
+                            <Text id="supplierText" text="{supplier}" wrapping="true"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

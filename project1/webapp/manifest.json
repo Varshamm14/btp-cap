@@ -82,7 +82,12 @@
                     "name": "home",
                     "pattern": "home",
                     "target": "home"
-                }
+                },
+                {
+                    "pattern": "product",
+                    "name": "product",
+                    "target": "product"
+                  }
             ],
             "targets": {
                 "login": {
@@ -92,7 +97,11 @@
                 "home": {
                     "viewName": "Home",
                     "viewLevel": 1
-                }
+                },
+                "product": {
+                    "viewName": "Product",
+                    "viewLevel": 2
+                  }
             }
         },
         "rootView": {
