@@ -10,7 +10,7 @@ BEGIN
     DECLARE v_message NVARCHAR(200) DEFAULT 'Invalid credentials or inactive user.';  -- Default error message
 
     -- Check if the user exists with the provided username, password, and status (active)
-    SELECT "status" INTO v_status
+    SELECT COUNT(*) INTO recordCount
     FROM "users"
     WHERE "username" = :userName
     AND "password" = :user_password

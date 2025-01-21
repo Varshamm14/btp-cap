@@ -7,11 +7,11 @@ sap.ui.define([
  
     return Controller.extend("project1.controller.Login", {
         onInit: function() {
-            var data = new JSONModel({
+            var oModel = new JSONModel({
                 username: "",
                 password: ""
             });
-            this.getView().setModel(data, "loginModel");
+            this.getView().setModel(oModel, "loginModel");
         },
  
         onShowPassword: function(oEvent) {
@@ -40,7 +40,7 @@ sap.ui.define([
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
-                    mode: 'cors',
+                    mode: 'no-cors',
                     body: JSON.stringify({
                         username: username,
                         password: password
@@ -69,8 +69,9 @@ sap.ui.define([
                             router.navTo("home");  // Ensure "home" is a defined route.
                         }.bind(this)
                     });
+                    // || "Login failed"
                 } else {
-                    MessageBox.error(data.message || "Login failed", {
+                    MessageBox.error(data.message, {
                         title: "Login Failed"
                     });
                 }
