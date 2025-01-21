@@ -18,12 +18,12 @@ public class LoginDAO {
     public int validateUserLogin(String username, String password) {
       
         StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("LOGIN_VALIDATION");
-        storedProcedure.registerStoredProcedureParameter("p_username", String.class, ParameterMode.IN);
-        storedProcedure.registerStoredProcedureParameter("p_password", String.class, ParameterMode.IN);  
-        storedProcedure.registerStoredProcedureParameter("p_status", Integer.class, ParameterMode.OUT);
-        storedProcedure.registerStoredProcedureParameter("p_message", String.class, ParameterMode.OUT);     
-        storedProcedure.setParameter("p_username", username);
-        storedProcedure.setParameter("p_password", password);
+        storedProcedure.registerStoredProcedureParameter("username", String.class, ParameterMode.IN);
+        storedProcedure.registerStoredProcedureParameter("password", String.class, ParameterMode.IN);  
+        storedProcedure.registerStoredProcedureParameter("status", Integer.class, ParameterMode.OUT);
+        storedProcedure.registerStoredProcedureParameter("message", String.class, ParameterMode.OUT);     
+        storedProcedure.setParameter("username", username);
+        storedProcedure.setParameter("password", password);
 
         try{
         storedProcedure.execute();
