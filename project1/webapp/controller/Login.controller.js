@@ -76,7 +76,7 @@ sap.ui.define([
                     });
                 }
             } catch (error) {
-                console.error("Login error:", error);
+                // console.error("Login error:", error);
                 sap.ui.core.BusyIndicator.hide();
                 MessageBox.error("An error occurred during login. Please try again.", {
                     title: "Login Failed"
