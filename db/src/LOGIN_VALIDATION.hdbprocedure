@@ -13,12 +13,12 @@ BEGIN
     EX_MESSAGE = 'Invalid credentials or inactive user.'; -- Default error message
 
     -- Check if the user exists with the provided username and password
-    IF EXISTS (SELECT 1 FROM "users" WHERE "username" = :userName AND "password" = :user_password) THEN
+    IF EXISTS (SELECT 1 FROM "users" WHERE "username" = userName AND "password" = user_password) THEN
         -- Fetch the user status
         SELECT "status" INTO user_status
         FROM "users"
-        WHERE "username" = :userName
-        AND "password" = :user_password;
+        WHERE "username" = userName
+        AND "password" = user_password;
 
         -- Validate user status
         IF user_status = 1 THEN
