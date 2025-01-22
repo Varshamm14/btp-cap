@@ -1,35 +1,36 @@
-PROCEDURE "LOGIN_VALIDATION"(
+PROCEDURE "LOGIN_VALIDATION" (
     IN userName NVARCHAR(256),
     IN user_password NVARCHAR(256),
     OUT user_status INT,
     OUT EX_MESSAGE NVARCHAR(200)
 )
+LANGUAGE SQLSCRIPT
+SQL SECURITY INVOKER
 AS
 BEGIN
-    -- Declare local variables
-    DECLARE recordCount INT;  -- To hold the count of matching records
-
     -- Initialize output parameters
     user_status = -1;  -- Default to -1 (invalid credentials)
     EX_MESSAGE = 'Invalid credentials or inactive user.'; -- Default error message
 
     -- Check if the user exists with the provided username and password
-    SELECT "status" INTO user_status
-    FROM "users"
-    WHERE "username" = userName
-    AND "password" = user_password;
+    IF EXISTS (SELECT 1 FROM "users" WHERE "username" = :userName AND "password" = :user_password) THEN
+        -- Fetch the user status
+        SELECT "status" INTO user_status
+        FROM "users"
+        WHERE "username" = :userName
+        AND "password" = :user_password;
 
-    -- Validate user status
-    IF user_status = 1 THEN
-        -- User is active
-        EX_MESSAGE = 'Authentication successful';
-    ELSEIF user_status = 0 THEN
-        -- User is inactive
-        EX_MESSAGE = 'User is inactive.';
+        -- Validate user status
+        IF user_status = 1 THEN
+            -- User is active
+            EX_MESSAGE = 'Authentication successful.';
+        ELSEIF user_status = 0 THEN
+            -- User is inactive
+            EX_MESSAGE = 'User is inactive.';
+        END IF;
     ELSE
-        -- No matching user or invalid credentials
+        -- No matching user found
         user_status = -1;
         EX_MESSAGE = 'Invalid credentials.';
     END IF;
-
 END;
