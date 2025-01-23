@@ -1,56 +1,47 @@
 package customer.btp;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+ 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.StoredProcedureQuery;
-
+ 
 @Repository
 public class LoginDAO {
-
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
-
-    public int validateUserLogin(String username, String password) {
-        // Create the stored procedure query for the LOGIN_VALIDATION procedure
-        StoredProcedureQuery storedProcedure = entityManager.createStoredProcedureQuery("LOGIN_VALIDATION");
-
-        // Register input and output parameters for the stored procedure
-        // Register input parameters (userName and user_password) - Ensure parameter names match the ones in the stored procedure
-        storedProcedure.registerStoredProcedureParameter("userName", String.class, ParameterMode.IN);
-        storedProcedure.registerStoredProcedureParameter("user_password", String.class, ParameterMode.IN);
-        
-        // Register output parameters (user_status, EX_MESSAGE)
-        storedProcedure.registerStoredProcedureParameter("user_status", Integer.class, ParameterMode.OUT);
-        storedProcedure.registerStoredProcedureParameter("EX_MESSAGE", String.class, ParameterMode.OUT);
-
-        // Bind the input parameters (username and password) to the stored procedure
-        storedProcedure.setParameter("userName", username);  // Bind 'username' to the 'userName' parameter
-        storedProcedure.setParameter("user_password", password);  // Bind 'password' to the 'user_password' parameter
-
+ 
+    /* Validate Client Login */
+    public int validateLogin(String username, String password) {
         try {
+            // Initialize the stored procedure query
+            StoredProcedureQuery sp_ValidateLogin = entityManager.createStoredProcedureQuery("LOGIN_VALIDATION");
+ 
+            // Register parameters
+            sp_ValidateLogin.registerStoredProcedureParameter(1, String.class, ParameterMode.IN);  // "USERNAME"
+            sp_ValidateLogin.registerStoredProcedureParameter(2, String.class, ParameterMode.IN);  // "userPassword"
+            sp_ValidateLogin.registerStoredProcedureParameter(3, Integer.class, ParameterMode.OUT); // "p_status"
+            sp_ValidateLogin.registerStoredProcedureParameter(4, String.class, ParameterMode.OUT);  // "p_Message"
+ 
+            // Set input parameters
+            sp_ValidateLogin.setParameter(1, username);   // "USERNAME"
+            sp_ValidateLogin.setParameter(2, password);   // "userPassword"
+ 
             // Execute the stored procedure
-            storedProcedure.execute();
-
-            // Get output parameters after the stored procedure executes
-            Integer status = (Integer) storedProcedure.getOutputParameterValue("user_status");
-            String message = (String) storedProcedure.getOutputParameterValue("EX_MESSAGE");
-
-            // Optional: Log the message for debugging purposes
-            System.out.println("Stored Procedure Output: " + message);
-
-            // Return the user status based on the stored procedure result
-            if (status != null) {
-                return status;  // Return the user status (0, 1, etc.)
-            }
+            sp_ValidateLogin.execute();
+ 
+            // Retrieve output parameters
+            int status = (Integer) sp_ValidateLogin.getOutputParameterValue(3);  // "p_status"
+            String message = (String) sp_ValidateLogin.getOutputParameterValue(4);  // "p_Message"
+ 
+            // Print output for debugging
+            System.out.println("Status: " + status + ", Message: " + message);
+ 
+            return status;  // Return the status (e.g., 1 for success, 0 for inactive, -1 for failure)
         } catch (Exception e) {
-            // Log the exception for debugging
             e.printStackTrace();
+            return -1;  // Return -1 in case of an error
         }
-
-        // Default return value in case of errors (e.g., invalid credentials)
-        return -1; // -1 indicates invalid credentials or an error
     }
 }

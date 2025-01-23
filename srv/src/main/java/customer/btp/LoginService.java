@@ -11,7 +11,7 @@ public class LoginService {
     private LoginDAO loginDao;
 
     public LoginResponse validateLogin(String username, String password) {
-        int userStatus = loginDao.validateUserLogin(username, password);
+        int userStatus = loginDao.validateLogin(username, password);
 
         if (userStatus == -1) {
             return new LoginResponse("Invalid credentials", false);
