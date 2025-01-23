@@ -1,9 +1,9 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-"sap/m/MessageBox",
-"sap/ui/model/json/JSONModel"
+    "sap/m/MessageBox",
+    "sap/ui/model/json/JSONModel"
 ], function(Controller, MessageBox, JSONModel) {
-    "use strict";
+    "use strict";  
 
     return Controller.extend("project1.controller.Login", {
         onInit: function() {
@@ -30,9 +30,13 @@ sap.ui.define([
         onLoginPress: async function() {
             console.log("Login button pressed");
             var oModel = this.getView().getModel("loginModel");
-            var username = oModel.getProperty("/username");
-            var password = oModel.getProperty("/password");
-            sap.ui.core.BusyIndicator.show(0);
+            let oData = oModel.getData();
+            var username = oData.username;
+            var password = oData.password;
+            
+                
+            // Show busy indicator
+            // sap.ui.core.BusyIndicator.show(0);
 
             try {
                 var response = await fetch('http://localhost:8082/api/validateLogin', {
@@ -45,35 +49,47 @@ sap.ui.define([
                 });
 
                 console.log("Response status:", response.status);
+
                 if (!response.ok) {
                     throw new Error("Failed with status: " + response.status);
                 }
 
+                // Log the raw response to inspect it
                 var data = await response.json();
                 console.log("Login response:", data);
-                sap.ui.core.BusyIndicator.hide();
 
-                if (data.success) {
-                    var userModel = new JSONModel({
-                        username: data.user.username,
-                        status: data.user.status
-                    });
-                    this.getOwnerComponent().setModel(userModel, "userModel");
+                // Check if the 'data' has the expected structure
+                if (data && data.success) {
+                    // Hide busy indicator
+                    // sap.ui.core.BusyIndicator.hide();
 
+                    // Create the user model with user data
+                    // const userModel = new JSONModel({
+                    //     username:username,
+                    //     status:status
+                    // });
+
+                    // Set the user model at the component level
+                    // this.getOwnerComponent().setModel(userModel, 'userModel');
+
+                    // Show success message
                     MessageBox.success("Login successful!! - User is active", {
                         onClose: function() {
-                            var router = this.getOwnerComponent().getRouter();
-                            router.navTo("home"); // Ensure "home" is a defined route.
+                            const router = this.getOwnerComponent().getRouter();
+                            router.navTo("home"); // Ensure "home" is a valid route
                         }.bind(this)
                     });
+
                 } else {
-                    MessageBox.error(data.message, {
+                    // Handle login failure
+                    MessageBox.error(data.message || "Unknown error", {
                         title: "Login Failed"
                     });
+                    // sap.ui.core.BusyIndicator.hide(); Hide busy indicator on failure
                 }
             } catch (error) {
                 console.error("Login error:", error);
-                sap.ui.core.BusyIndicator.hide();
+                // sap.ui.core.BusyIndicator.hide(); Ensure busy indicator is hidden on error
                 MessageBox.error("An error occurred during login. Please try again.", {
                     title: "Login Failed"
                 });

@@ -3,5 +3,9 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     displayBlock="true">
-    <App id="app"/>
+    <App id="app">
+        <pages>
+            <!-- Initial page is Login, it will be routed to based on the routing configuration -->
+        </pages>
+    </App>
 </mvc:View>

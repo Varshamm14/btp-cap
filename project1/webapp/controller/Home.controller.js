@@ -6,7 +6,7 @@ sap.ui.define([
     return Controller.extend("project1.controller.Home", {
         onNavBack: function() {
             var router = this.getOwnerComponent().getRouter();
-            router.navTo("Login");
+            router.navTo("login");
         },
         
         onProductPress: function() {

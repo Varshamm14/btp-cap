@@ -3,12 +3,12 @@ package customer.btp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+// import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "https://port5500-workspaces-ws-g9mtn.us10.trial.applicationstudio.cloud.sap")
+// @CrossOrigin(origins = "https://port5500-workspaces-ws-g9mtn.us10.trial.applicationstudio.cloud.sap")
 
 @RestController
 public class LoginController {

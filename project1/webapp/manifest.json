@@ -92,14 +92,19 @@
             "targets": {
                 "login": {
                     "viewName": "Login",
+                    "viewType": "XML",
                     "viewLevel": 0
                 },
                 "home": {
                     "viewName": "Home",
+                    "viewId": "home",
+                     "viewType": "XML",
                     "viewLevel": 1
                 },
                 "product": {
                     "viewName": "Product",
+                    "viewId": "productPage",
+                    "viewType": "XML",
                     "viewLevel": 2
                   }
             }

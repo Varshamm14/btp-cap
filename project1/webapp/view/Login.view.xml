@@ -4,26 +4,26 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:core="sap.ui.core"
     displayBlock="true">
-    <!-- Added unique ID for the App control -->
+    <!-- App control -->
     <App id="loginApp">
-        <!-- Added unique ID for the Page control -->
+        <!-- Page control -->
         <Page id="loginPage" title="Login Page" showHeader="false">
-            <!-- Added unique ID for the FlexBox control -->
+            <!-- FlexBox control -->
             <FlexBox
                 id="loginFlexBox"
                 height="100%"
                 alignItems="Center"
                 justifyContent="Center">
-                <!-- Added unique ID for the Panel control -->
+                <!-- Panel control -->
                 <Panel
                     id="loginPanel"
                     headerText="Login Page"
                     width="400px"
                     class="sapUiResponsiveMargin">
                     <content>
-                        <!-- Added unique ID for the VBox control -->
+                        <!-- VBox control -->
                         <VBox id="loginVBox" class="sapUiSmallMargin">
-                            <!-- Added unique IDs for Label, Input, and Button controls -->
+                            <!-- Username input -->
                             <Label id="usernameLabel" text="Username" required="true"/>
                             <Input
                                 id="usernameInput"
@@ -31,6 +31,7 @@
                                 class="sapUiSmallMarginBottom"
                                 width="350px"
                                 value="{loginModel>/username}"/>
+                            <!-- Password input -->
                             <Label id="passwordLabel" text="Password" required="true"/>
                             <Input
                                 id="passwordInput"
@@ -40,12 +41,14 @@
                                 width="350px"
                                 value="{loginModel>/password}"
                                 tooltip="Show/Hide Password"/>
+                            <!-- Show/Hide password button -->
                             <Button
                                 id="showPasswordButton"
                                 icon="sap-icon://show"
                                 press="onShowPassword"
                                 tooltip="Show/Hide Password"
                                 width="50px"/>
+                            <!-- Login button -->
                             <Button
                                 id="loginButton"
                                 text="Login"
