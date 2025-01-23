@@ -2,18 +2,17 @@
     controllerName="project1.controller.Home"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
-    <!-- Added unique ID for the Page -->
-    <Page id="homePage" title="Home" showNavButton="true" navButtonPress="onNavBack">
+    <Page id="_IDGenPage" title="Home" showNavButton="true" navButtonPress="onNavBack">
         <content>
-            <!-- Added unique ID for the VBox -->
-            <VBox id="homeVBox" alignItems="Center" justifyContent="Center" height="100%">
-                <!-- Added unique ID for the Button -->
-                <Button
-                    id="productPageButton"
+            <VBox id="_IDGenVBox" alignItems="Center" justifyContent="Center" height="100%">
+               <Text id="_IDGenText" text="Welcome to Products page !!!" class="boldText" />
+                <Text id="_IDGenText1" text="Start Buying Your Dream Product by clicking the below button." />
+                <Button id="_IDGenButton"
                     text="Product Page"
                     press="onProductPress"
                     class="sapUiSmallMarginBottom"
                     width="200px"/>
+               
             </VBox>
         </content>
     </Page>
