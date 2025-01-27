@@ -1,0 +1,15 @@
+DELIMITER $$
+
+CREATE PROCEDURE CREATE_ITEM(
+    IN p_name VARCHAR(100),
+    IN p_description VARCHAR(500),
+    IN p_status VARCHAR(50)
+)
+BEGIN
+    -- Insert a new item into the Items table
+    INSERT INTO Items (name, description, status, createdAt)
+    VALUES (p_name, p_description, p_status, NOW());
+    
+END$$
+
+DELIMITER ;
