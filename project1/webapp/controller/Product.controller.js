@@ -29,6 +29,10 @@ sap.ui.define([
         onNavBack: function() {
             var router = this.getOwnerComponent().getRouter();
             router.navTo("home");
+        },
+        onProductCategoryPress: function() {
+            var router = this.getOwnerComponent().getRouter();
+            router.navTo("productcategory");
         }
     });
 });

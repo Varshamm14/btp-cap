@@ -1,0 +1,27 @@
+<mvc:View controllerName="project1.controller.Categories"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+
+    <f:DynamicPage headerExpanded="true">
+        <!-- Dynamic Page Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Product Categories" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <!-- Dynamic Page Content -->
+        <f:content>
+            <VBox>
+                <Text text="Select a Product Category:" />
+                <Button text="Electronics" type="Default" press="onCategorySelect" />
+                <Button text="Fashion" type="Default" press="onCategorySelect" />
+                <Button text="Groceries" type="Default" press="onCategorySelect" />
+                <Button text="Books" type="Default" press="onCategorySelect" />
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

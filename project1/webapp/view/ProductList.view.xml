@@ -1,0 +1,18 @@
+<mvc:View controllerName="project1.controller.ProductList"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    
+    <List id="productList" items="{
+        path: '/products',
+        filters: [{
+            path: 'category',
+            operator: 'EQ',
+            value1: '{/category}'
+        }]
+    }">
+        <items>
+            <StandardListItem title="{name}" description="{description}" />
+        </items>
+    </List>
+
+</mvc:View>

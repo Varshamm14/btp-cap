@@ -64,5 +64,10 @@
                 </items>
             </Table>
         </content>
+          <Button id="_IDGenButton"
+                    text="Product Category"
+                    press="onProductCategoryPress"
+                    class="sapUiSmallMarginBottom"
+                    width="200px"/>   
     </Page>
 </mvc:View>

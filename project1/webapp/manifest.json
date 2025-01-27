@@ -87,6 +87,21 @@
                     "pattern": "product",
                     "name": "product",
                     "target": "product"
+                  },
+                  {
+                    "pattern": "productcategory",
+                    "name": "productcategory",
+                    "target": "productcategory"
+                  },
+                  {
+                    "pattern": "category",
+                    "name": "category",
+                    "target": "category"
+                  },
+                  {
+                    "pattern": "productlist",
+                    "name": "productlist",
+                    "target": "productlist"
                   }
             ],
             "targets": {
@@ -104,6 +119,24 @@
                 "product": {
                     "viewName": "Product",
                     "viewId": "productPage",
+                    "viewType": "XML",
+                    "viewLevel": 2
+                  },
+                  "productcategory": {
+                    "viewName": "ProductCategory",
+                    "viewId": "productcategoryPage",
+                    "viewType": "XML",
+                    "viewLevel": 2
+                  },
+                  "category": {
+                    "viewName": "Categories",
+                    "viewId": "categoryPage",
+                    "viewType": "XML",
+                    "viewLevel": 2
+                  },
+                  "productlist": {
+                    "viewName": "ProductList",
+                    "viewId": "productlist",
                     "viewType": "XML",
                     "viewLevel": 2
                   }

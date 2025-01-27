@@ -35,9 +35,8 @@ sap.ui.define([
             var password = oData.password;
             
                 
-            // Show busy indicator
-            // sap.ui.core.BusyIndicator.show(0);
-
+         
+ 
             try {
                 var response = await fetch('http://localhost:8082/api/validateLogin', {
                     method: 'POST',
@@ -73,6 +72,7 @@ sap.ui.define([
                     // this.getOwnerComponent().setModel(userModel, 'userModel');
 
                     // Show success message
+                 
                     MessageBox.success("Login successful!! - User is active", {
                         onClose: function() {
                             const router = this.getOwnerComponent().getRouter();

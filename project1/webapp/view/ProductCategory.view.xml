@@ -1,0 +1,35 @@
+<mvc:View controllerName="project1.controller.ProductCategory"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+
+    <f:DynamicPage headerExpanded="true">
+        <!-- Dynamic Page Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Order Page" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <!-- Dynamic Page Header -->
+        <f:header>
+            <f:DynamicPageHeader>
+                <Toolbar>
+                    <content>
+                        <Button text="Product Categories" type="Emphasized" press="onNavigateToCategories" />
+                    </content>
+                </Toolbar>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <!-- Dynamic Page Content -->
+        <f:content>
+            <VBox>
+                <Text text="Welcome to the Create Order Page!" />
+                <Text text="Use the button above to explore product categories." />
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

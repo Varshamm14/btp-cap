@@ -11,8 +11,7 @@
                     text="Product Page"
                     press="onProductPress"
                     class="sapUiSmallMarginBottom"
-                    width="200px"/>
-               
+                    width="200px"/>          
             </VBox>
         </content>
     </Page>
