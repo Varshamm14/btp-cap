@@ -1,18 +1,50 @@
 <mvc:View controllerName="project1.controller.ProductList"
+    xmlns:uxap="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    
-    <List id="productList" items="{
-        path: '/products',
-        filters: [{
-            path: 'category',
-            operator: 'EQ',
-            value1: '{/category}'
-        }]
-    }">
-        <items>
-            <StandardListItem title="{name}" description="{description}" />
-        </items>
-    </List>
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    height="100%">
 
+    <uxap:ObjectPageLayout id="create_MafiTrailer" useIconTabBar="true" showFooter="true">
+        <uxap:headerTitle>
+            <uxap:ObjectPageDynamicHeaderTitle>
+                <uxap:expandedHeading>
+                    <Title text="Add Electronics items" wrapping="true" />
+                </uxap:expandedHeading>
+            </uxap:ObjectPageDynamicHeaderTitle>
+        </uxap:headerTitle>
+
+        <uxap:sections>
+            <uxap:ObjectPageSection title="General Details">
+                <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                        <VBox>
+                            <!-- Name Field with Medium Width -->
+                            <Label text="Name" required="true" />
+                            <Input value="{itemmdl>/name}" width="30%" /> 
+
+                            <!-- Description Field -->
+                            <Label text="Description" />
+                            <TextArea value="{itemmdl>/description}" rows="2" width="30%" />
+
+                            <!-- Status Field -->
+                            <Label text="Status" required="true" />
+                            <ComboBox selectedKey="{itemmdl>/status}" >
+                                <core:Item key="Available" text="Available" />
+                                <core:Item key="OutOfStock" text="Out of Stock" />
+                            </ComboBox>
+                        </VBox>
+                    </uxap:ObjectPageSubSection>
+                </uxap:subSections>
+            </uxap:ObjectPageSection>
+        </uxap:sections>
+
+        <uxap:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button type="Emphasized" text="Save" press="onPressSave" />
+                <Button type="Ghost" text="Cancel" press="onPressCancel" />
+            </OverflowToolbar>
+        </uxap:footer>
+    </uxap:ObjectPageLayout>
 </mvc:View>

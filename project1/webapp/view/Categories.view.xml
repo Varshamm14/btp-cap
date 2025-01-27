@@ -17,10 +17,10 @@
         <f:content>
             <VBox>
                 <Text text="Select a Product Category:" />
-                <Button text="Electronics" type="Default" press="onCategorySelect" />
-                <Button text="Fashion" type="Default" press="onCategorySelect" />
-                <Button text="Groceries" type="Default" press="onCategorySelect" />
-                <Button text="Books" type="Default" press="onCategorySelect" />
+                <Button text="Electronics" type="Default" press="onElectronicsPress" />
+                <Button text="Fashion" type="Default" press="onFashionPress" />
+                <Button text="Groceries" type="Default" press="onGroceriesPress" />
+                <Button text="Books" type="Default" press="onbooksPress" />
             </VBox>
         </f:content>
     </f:DynamicPage>
